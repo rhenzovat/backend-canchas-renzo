@@ -3,15 +3,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const chalk_1 = __importDefault(require("chalk"));
-const figlet_1 = __importDefault(require("figlet"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-console.log(chalk_1.default.green('I am a green line ' +
-    chalk_1.default.blue.underline.bold('with a blue substring') +
-    ' that becomes green again!'));
-console.log(figlet_1.default.textSync("renzo"));
-console.log(chalk_1.default.green.bgRed.bold(figlet_1.default.textSync("renzo")));
-console.log(process.env.S3_BUCKET);
-console.log(process.env.MI_VARIABLE);
+const express_1 = __importDefault(require("express")); //importacion de la libreria
+require("dotenv/config");
+const app = (0, express_1.default)(); //Creacion de la aplicacion express
+const port = process.env.PORT;
+function miMiddleware(req, res, next) {
+    console.log('este es un middleware');
+    console.log(`${req.method} ${req.url}`);
+    next();
+}
+//creando un middleware
+app.use(miMiddleware);
+app.get('/usuario', (req, res) => {
+    console.log('este es mi servicio');
+    res.send('soy renzo PUERTO 3000'); //Enviar la respuesta al cliente
+});
+app.listen(port, () => {
+    console.log(`El servidor esta corriendo en el puerto ${port}`);
+}); //poner el puerto en escucha
 //# sourceMappingURL=app.js.map

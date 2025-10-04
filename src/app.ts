@@ -1,19 +1,26 @@
-import chalk from 'chalk';
-import figlet from "figlet";
-import dotenv from 'dotenv'
-dotenv.config();
+import express from 'express'//importacion de la libreria
+import 'dotenv/config'
+const app = express() //Creacion de la aplicacion express
+const port = process.env.PORT
 
-console.log(chalk.green(
-	'I am a green line ' +
-	chalk.blue.underline.bold('with a blue substring') +
-	' that becomes green again!'
-));
+function miMiddleware(req, res, next){
+	console.log('este es un middleware');
+	console.log(`${req.method} ${req.url}`)
+	next()
+}
 
-console.log(figlet.textSync("renzo")
-);
+//creando un middleware
+app.use(miMiddleware);
 
-console.log(chalk.green.bgRed.bold(figlet.textSync("renzo"))
-);
 
-console.log(process.env.S3_BUCKET);
-console.log(process.env.MI_VARIABLE);
+app.get('/usuario', (req, res) => { //definicion de un ruta y metodo HTTP
+	console.log('este es mi servicio')
+  res.send('soy renzo PUERTO 3000') //Enviar la respuesta al cliente
+
+})
+
+app.listen(port, ()=>{
+	console.log(`El servidor esta corriendo en el puerto ${port}`)
+})//poner el puerto en escucha
+
+
