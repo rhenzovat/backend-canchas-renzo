@@ -2,6 +2,7 @@
   "name": "backend-canchas-renzo",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node dist/app.js",
     "dev": "node --watch dist/app.js",
